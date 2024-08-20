@@ -1,6 +1,6 @@
 // Handles HTTP requests related to tasks (e.g., creating, updating, retrieving tasks).
 
-const tasksService = require('./tasksService');
+const tasksService = require('../services/tasksService');
 
 // Controller to handle task-related HTTP requests
 

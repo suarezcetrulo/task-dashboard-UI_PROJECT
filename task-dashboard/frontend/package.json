@@ -1,5 +1,5 @@
 {
-  "name": "task-dashboard",
+  "name": "task-dashboard-frontend",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://Aldridge-Abaasa.github.io/task-dashboard-UI_Frontend",
@@ -8,12 +8,10 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.4",
-    "express": "^4.19.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "^3.0.1",
-    "socket.io": "^4.7.5",
-    "socket.io-client": "^4.7.5",
+    "socket.io-client": "^4.7.5", // For connecting to the WebSocket
     "web-vitals": "^2.1.4"
   },
   "scripts": {

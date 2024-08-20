@@ -585,3 +585,21 @@ Testing: After setting up everything, you should test the full stack to ensure t
 Created database.js: Moved database-related logic to database.js for better modularity.
 Updated server.js: Modified server.js to import functions from database.js and use them for database operations.
 Added database folder
+
+For the Package.json file :
+
+Explanation of Key Parts:
+Dependencies:
+
+express: For the web server.
+sqlite3: SQLite library for Node.js.
+sqlite: Provides async/await support for SQLite.
+socket.io: For real-time communication.
+Scripts:
+
+"start": "node server.js": Command to start your backend server.
+Engines:
+
+Specifies the Node.js version compatibility. Adjust as needed based on your environment
+
+
