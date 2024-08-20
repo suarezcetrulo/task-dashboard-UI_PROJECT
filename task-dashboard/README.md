@@ -465,3 +465,67 @@ task-dashboard/
 ├── .gitignore                           # Global .gitignore for project root
 ├── docker-compose.yml                   # Docker Compose file to orchestrate services
 └── README.md                            # Documentation for the project
+
+
+Notes on server.js: 
+Key Points from the Code:
+Static File Serving:
+
+The backend is set up to serve the React app's build files. This is good, but with the frontend being served by Nginx, you may not need to serve the React app from here in a Docker environment.
+WebSocket for Real-Time Updates:
+
+The WebSocket setup using socket.io is well-implemented for real-time task updates.
+Task Handling:
+
+Tasks are currently stored in memory (let tasks = [...]). For production, these should be stored in a persistent database (SQLite).
+Task Status Updates:
+
+The code simulates task status updates every minute, which is in line with your requirements.
+
+Adjustments made to this server.js: 
+    Database Integration:
+
+Persist Tasks in SQLite: The tasks should be stored and retrieved from the SQLite database instead of in-memory storage. This ensures persistence across server restarts.
+Replace the in-memory tasks array with database operations.
+Remove Static File Serving:
+
+Since Nginx is configured to serve the React app, you can remove or comment out the static file serving part from the backend if the environment is production.
+Environment Variables:
+
+Consider setting up environment variables for critical configurations, such as database paths, WebSocket settings, and more. This can be set in Docker Compose.
+Docker Compatibility:
+
+Ensure the server gracefully handles signals like SIGTERM for container shutdown.
+
+Additional:
+
+Explanation of the Code:
+Imports and Setup:
+
+Express is used to create the HTTP server.
+Socket.io is set up for real-time WebSocket communication.
+SQLite is used for persisting tasks data in a local database file.
+HTTP and Path modules are used for creating the server and handling file paths.
+Database Initialization:
+
+The initDb() function sets up the SQLite database and ensures that the tasks table is created if it doesn’t already exist.
+Task Handling:
+
+The tasks are managed within an SQLite database. Functions like getTasks(), updateTaskStatus(), and addTaskToDb() interact with the database to retrieve, update, and add tasks respectively.
+API Route:
+
+The /api/tasks endpoint sends the current list of tasks to the frontend in JSON format. This is useful for initializing the task dashboard.
+WebSocket Setup:
+
+On Connection: When a client connects, they receive the current list of tasks.
+Task Status Update: The server automatically updates the status of each task every minute and broadcasts these updates to all connected clients.
+Add Task: New tasks can be added in real-time and are immediately saved to the database and broadcast to all clients.
+Graceful Shutdown:
+
+The server is set up to handle shutdown signals (SIGINT), ensuring that any running intervals are cleared to prevent memory leaks or unexpected behavior.
+Server Start:
+
+The server listens on the specified port (defaulting to 4000) and initializes the database before accepting connections.
+Final Notes:
+This server.js file is now well-commented, ensuring that anyone reviewing the code can understand the purpose of each part.
+The setup is correct and aligns with the requirements of your project, including real-time updates, task persistence with SQLite, and proper handling of client connections and disconnections.
