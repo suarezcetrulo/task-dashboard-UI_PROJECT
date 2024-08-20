@@ -1,0 +1,1 @@
+// Sets up and connects to your SQLite database. Ensure you have functions for creating tables and performing CRUD operations.
