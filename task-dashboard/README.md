@@ -432,7 +432,7 @@ This stack is highly compatible and optimized for complex, scalable applications
 
 Change of file structure in directory : 
 
-project-root/
+task-dashboard/
 │
 ├── backend/                             # Backend code
 │   ├── server.js                        # Entry point for the backend
