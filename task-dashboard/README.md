@@ -581,3 +581,6 @@ Next Steps:
 Routes Setup in server.js: Ensure that the HTTP routes (/api/tasks, etc.) are correctly mapped to the corresponding methods in taskController.js.
 
 Testing: After setting up everything, you should test the full stack to ensure tasks are being correctly created, updated, and retrieved.
+
+Created database.js: Moved database-related logic to database.js for better modularity.
+Updated server.js: Modified server.js to import functions from database.js and use them for database operations.
