@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Backend service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - database
+    environment:
+      - NODE_ENV=production
+
+  # Frontend service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=production
+
+  # Nginx service
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+
+  # SQLite database service
+  database:
+    image: nouchka/sqlite
+    volumes:
+      - ./backend/database:/data
+    environment:
+      - SQLITE_DB_PATH=/data/tasks.db
+
+networks:
+  default:
+    external:
+      name: task-dashboard-network
