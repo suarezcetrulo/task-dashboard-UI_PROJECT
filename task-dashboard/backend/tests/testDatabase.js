@@ -1,4 +1,4 @@
-const { initDb, getTasks, addTaskToDb, updateTaskStatus } = require('./database/database');
+const { initDb, getTasks, addTaskToDb, updateTaskStatus } = require('../database/database');
 
 async function testDatabase() {
   try {
