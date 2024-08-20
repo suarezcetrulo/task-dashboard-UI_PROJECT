@@ -584,3 +584,4 @@ Testing: After setting up everything, you should test the full stack to ensure t
 
 Created database.js: Moved database-related logic to database.js for better modularity.
 Updated server.js: Modified server.js to import functions from database.js and use them for database operations.
+Added database folder
