@@ -426,3 +426,42 @@ Monitoring & Logging: Prometheus with Grafana, ELK Stack for logging
 Cloud: AWS or GCP with AWS CloudFront or Cloudflare for CDN
 Advanced: Apache Kafka for event streaming, Apollo Server for GraphQL
 This stack is highly compatible and optimized for complex, scalable applications. It balances cutting-edge technology with stability, ensuring your application is maintainable, performant, and scalable for future growth.
+
+
+
+
+Change of file structure in directory : 
+
+project-root/
+│
+├── backend/                             # Backend code
+│   ├── server.js                        # Entry point for the backend
+│   ├── tasksController.js               # Controller for handling task-related routes
+│   ├── tasksService.js                  # Business logic for tasks
+│   ├── database.js                      # SQLite database setup and connection
+│   ├── package.json                     # Backend dependencies and scripts
+│   ├── package-lock.json                # Locks the versions of dependencies
+│   ├── node_modules/                    # Backend dependencies (ignored by Git)
+│   ├── Dockerfile                       # Dockerfile for the backend
+│   └── .gitignore                       # Ignore node_modules and other unnecessary files
+│
+├── frontend/                            # Frontend code
+│   ├── public/                          # Public assets like index.html, favicon, etc.
+│   ├── src/                             # React components and source code
+│   │   ├── App.js                       # Main React app component
+│   │   ├── TaskDashboard.js             # Task dashboard component
+│   │   └── index.js                     # ReactDOM render entry point
+│   ├── package.json                     # Frontend dependencies and scripts
+│   ├── package-lock.json                # Locks the versions of dependencies
+│   ├── node_modules/                    # Frontend dependencies (ignored by Git)
+│   ├── build/                           # Production-ready static files (ignored by Git)
+│   ├── Dockerfile                       # Dockerfile for the frontend
+│   └── .gitignore                       # Ignore node_modules, build, and other unnecessary files
+│
+├── nginx/                               # Nginx configuration
+│   ├── nginx.conf                       # Nginx configuration file
+│   └── Dockerfile                       # Dockerfile for Nginx
+│
+├── .gitignore                           # Global .gitignore for project root
+├── docker-compose.yml                   # Docker Compose file to orchestrate services
+└── README.md                            # Documentation for the project
