@@ -702,3 +702,4 @@ Testing and review of backend:
 
 When reviewing the backend files, it's strategic to start from the core and move outward. In your case, a logical sequence would be to start with the foundational layer (the database interactions) and proceed to the layers that depend on it. 
 
+Inital testing of the Database is successful now Implementing automated testing with Jest and setting up Continuous Integration (CI) are excellent next steps to ensure your application remains robust, maintainable, and bug-free as it evolves.
