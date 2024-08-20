@@ -9,6 +9,7 @@ async function testDatabase() {
         console.log("Database initialized successfully.");
     } catch (error) {
         console.error("Error initializing the database:", error);
+        return;
     }
 
     // Test adding a task

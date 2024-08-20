@@ -19,14 +19,22 @@ async function initDb() {
 
     // SQL statement to create a 'tasks' table if it does not already exist.
     // This table will store the tasks with their details.
+    /*  
+    An auto-incrementing ID for each task. 
+    The name of the task.
+    Timestamp for when the task was created.
+    Timestamp for when the task ended.
+    The duration of the task in minutes.
+    Current status of the task.
+    */  
     await db.exec(`
       CREATE TABLE IF NOT EXISTS tasks (
-        id INTEGER PRIMARY KEY AUTOINCREMENT, // An auto-incrementing ID for each task.
-        task_name TEXT,                       // The name of the task.
-        created_at TEXT,                      // Timestamp for when the task was created.
-        ended_at TEXT,                        // Timestamp for when the task ended.
-        execution_time INTEGER,               // The duration of the task in minutes.
-        status TEXT                           // Current status of the task.
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        task_name TEXT,                       
+        created_at TEXT,                      
+        ended_at TEXT,                        
+        execution_time INTEGER,               
+        status TEXT                           
       )
     `);
   } catch (error) {
