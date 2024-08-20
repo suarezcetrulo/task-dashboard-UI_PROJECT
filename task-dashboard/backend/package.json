@@ -1,17 +1,18 @@
 {
-  "name": "task-dashboard-backend",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "express": "^4.19.2",
-    "sqlite3": "^5.1.6",   // Ensure SQLite3 is included
-    "sqlite": "^5.1.0",    // sqlite package for async/await
-    "socket.io": "^4.7.5"
-  },
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for the task dashboard",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.js"   // Command to start the backend server
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "engines": {
-    "node": ">=14.0.0"  // Specify the Node.js version
-  }
+  "dependencies": {
+    "express": "^4.17.1",
+    "sqlite": "^5.0.2",
+    "sqlite3": "^5.0.2",
+    "socket.io": "^4.0.0"
+  },
+  "author": "",
+  "license": "ISC"
 }
