@@ -529,3 +529,55 @@ The server listens on the specified port (defaulting to 4000) and initializes th
 Final Notes:
 This server.js file is now well-commented, ensuring that anyone reviewing the code can understand the purpose of each part.
 The setup is correct and aligns with the requirements of your project, including real-time updates, task persistence with SQLite, and proper handling of client connections and disconnections.
+
+Given the requirements of the challenge, the controller should provide methods for:
+
+Retrieving tasks.
+Adding new tasks.
+Updating task statuses.
+
+Explanation:
+getAllTasks:
+
+This method handles HTTP GET requests to retrieve all tasks from the database. It interacts with the tasksService.getAllTasks() method to get the task data.
+It returns the tasks as a JSON response or an error if something goes wrong.
+addTask:
+
+This method handles HTTP POST requests to add a new task. The new task's details are extracted from the request body.
+It uses tasksService.addTask(newTask) to add the task and returns the newly created task as a JSON response with a 201 status code. If the operation fails, it sends a 500 status code.
+updateTaskStatus:
+
+This method handles HTTP PUT requests to update the status of an existing task. The task's ID is extracted from the request parameters, and the new status is taken from the request body.
+It calls tasksService.updateTaskStatus(id, status) to perform the update.
+If the task is found and updated, the updated task is sent back as a JSON response. If not, a 404 status code is returned. Errors during the process result in a 500 status code.
+Next Steps:
+TasksService: The tasksService.js file is where the actual business logic and database interaction will reside. It will include methods like getAllTasks, addTask, and updateTaskStatus, which the controller relies on.
+Routes Setup: You would also need to set up routes in your server.js file to handle the incoming HTTP requests and direct them to the appropriate controller methods.
+
+For the tasksService.js
+Explanation:
+Database Initialization (initDb):
+
+The initDb function is used to open a connection to the SQLite database. This is done separately for each function to ensure that each operation is isolated and the database connection is properly closed after the operation is complete.
+getAllTasks:
+
+This function retrieves all tasks stored in the database using a SQL SELECT query. It returns an array of tasks, each representing a row in the tasks table.
+The database connection is closed after the operation to ensure resource management.
+addTask:
+
+This function inserts a new task into the tasks table. The task details (task_name, execution_time, and status) are provided as input, while the created_at field is automatically set to the current time.
+After the insertion, the function returns the full task object, including the generated id.
+updateTaskStatus:
+
+This function updates the status of an existing task in the database, identified by its id. It uses a SQL UPDATE statement to change the status.
+If no rows were affected by the update (i.e., the task was not found), an error is thrown.
+The function then retrieves and returns the updated task.
+Integration with Other Files:
+taskController.js: The tasksService.js functions are called by the controller methods (getAllTasks, addTask, updateTaskStatus). This keeps the controller lean and focused on handling HTTP requests and responses, while the service manages the actual data operations.
+
+server.js: The taskController.js will be used in the server.js file to set up the routes for handling tasks, ensuring that requests are routed to the appropriate controller methods.
+
+Next Steps:
+Routes Setup in server.js: Ensure that the HTTP routes (/api/tasks, etc.) are correctly mapped to the corresponding methods in taskController.js.
+
+Testing: After setting up everything, you should test the full stack to ensure tasks are being correctly created, updated, and retrieved.

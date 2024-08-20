@@ -11,6 +11,9 @@ const io = socketIo(server);
 
 let db;
 
+// Middleware to parse JSON bodies
+app.use(express.json());
+
 // Initialize SQLite database and create the `tasks` table if it doesn't exist
 async function initDb() {
   db = await open({
@@ -56,9 +59,17 @@ async function addTaskToDb(newTask) {
 
 // API route to get initial tasks from the database
 app.get("/api/tasks", async (req, res) => {
-  const tasks = await getTasks(); // Fetch tasks from the database
-  res.json(tasks); // Send tasks as JSON to the client
+  try {
+    const tasks = await getTasks(); // Fetch tasks from the database
+    res.json(tasks); // Send tasks as JSON to the client
+  } catch (error) {
+    console.error("Error fetching tasks:", error);
+    res.status(500).json({ error: "Failed to retrieve tasks" });
+  }
 });
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'build')));
 
 // Handle WebSocket connections for real-time communication
 io.on("connection", (socket) => {
@@ -67,38 +78,47 @@ io.on("connection", (socket) => {
   // Emit existing tasks to the newly connected client
   getTasks().then(tasks => {
     socket.emit("initialTasks", tasks);
+  }).catch(error => {
+    console.error("Error sending initial tasks:", error);
   });
 
   // Simulate task status updates every minute
   const updateInterval = setInterval(async () => {
     try {
-      let tasksUpdated = false; // Flag to check if any task was updated
       const tasks = await getTasks(); // Fetch current tasks from the database
-      const updatedTasks = tasks.map(task => {
+      let tasksUpdated = false; // Flag to check if any task was updated
+
+      for (let task of tasks) {
         let updatedTask = { ...task }; // Create a copy of the task object
 
         // Update the task status based on its current status
-        if (task.status === "Not started") {
-          updatedTask.status = "On progress";
-          tasksUpdated = true;
-        } else if (task.status === "On progress") {
-          updatedTask.status = "On hold";
-          tasksUpdated = true;
-        } else if (task.status === "On hold") {
-          updatedTask.status = "Finished";
-          tasksUpdated = true;
-        } else if (task.status === "Finished") {
-          updatedTask.status = "Terminated";
-          tasksUpdated = true;
+        switch (task.status) {
+          case "Not started":
+            updatedTask.status = "On progress";
+            tasksUpdated = true;
+            break;
+          case "On progress":
+            updatedTask.status = "On hold";
+            tasksUpdated = true;
+            break;
+          case "On hold":
+            updatedTask.status = "Finished";
+            tasksUpdated = true;
+            break;
+          case "Finished":
+            updatedTask.status = "Terminated";
+            tasksUpdated = true;
+            break;
+          default:
+            break;
         }
 
         // If a task was updated, save it to the database and notify clients
         if (tasksUpdated) {
-          updateTaskStatus(updatedTask); // Update task status in the database
+          await updateTaskStatus(updatedTask); // Update task status in the database
           io.emit("taskUpdated", updatedTask); // Notify all clients about the updated task
         }
-        return updatedTask; // Return the updated task
-      });
+      }
     } catch (error) {
       console.error("Error updating tasks:", error); // Log any errors during the update process
     }
@@ -106,8 +126,12 @@ io.on("connection", (socket) => {
 
   // Handle new task addition via WebSocket
   socket.on("addTask", async (newTask) => {
-    await addTaskToDb(newTask); // Add the new task to the database
-    io.emit("taskAdded", newTask); // Notify all clients about the new task
+    try {
+      await addTaskToDb(newTask); // Add the new task to the database
+      io.emit("taskAdded", newTask); // Notify all clients about the new task
+    } catch (error) {
+      console.error("Error adding new task:", error);
+    }
   });
 
   // Cleanup interval on disconnect
@@ -127,4 +151,6 @@ io.on("connection", (socket) => {
 const PORT = process.env.PORT || 4000;
 initDb().then(() => {
   server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}).catch(error => {
+  console.error("Error initializing database:", error);
 });
