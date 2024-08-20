@@ -13,7 +13,7 @@ async function initDb() {
   try {
     // Opens a connection to the SQLite database file. If the file does not exist, SQLite will create it.
     db = await open({
-      filename: './database/tasks.db', // The path to our database file.
+      filename: '../database/tasks.db', // The path to our database file.
       driver: sqlite3.Database         // Specifies which database driver to use, sqlite3 in this case.
     });
 
