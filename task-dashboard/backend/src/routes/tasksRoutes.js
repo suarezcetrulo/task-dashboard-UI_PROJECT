@@ -1,42 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const { getTasks, addTaskToDb, updateTaskStatus } = require("../database");
+const express = require('express');   // Import the express module
+const router = express.Router();    // Create a new router using express
+const taskController = require('../controllers/taskController');  // Import the task controller
 
-// Route to get all tasks optimised with adding pagination
-router.get("/", async (req, res) => {
-  const {page = 1, limit = 10} = req.query;
-  try {
-    const tasks = await getTasks({page, limit});
-    res.json(tasks);
-  } catch (error) {
-    console.error("Error fetching tasks:", error);
-    res.status(500).json({ error: "Failed to retrieve tasks" });
-  }
-});
+// Route to create a new task
+router.post('/tasks', taskController.createTask);   // Define the POST /tasks route
 
-// Route to add a new task
-router.post("/", async (req, res) => {
-  try {
-    const newTask = req.body;
-    await addTaskToDb(newTask);
-    res.status(201).json(newTask);
-  } catch (error) {
-    console.error("Error adding task:", error);
-    res.status(500).json({ error: "Failed to add task" });
-  }
-});
+// Route to get all tasks
+router.get('/tasks', taskController.getAllTasks);   // Define the GET /tasks route
 
-// Route to update a task status (if needed in the API)
-router.put("/:id/status", async (req, res) => {
-  try {
-    const taskId = req.params.id;
-    const updatedStatus = req.body.status;
-    const updatedTask = await updateTaskStatus(taskId, updatedStatus);
-    res.json(updatedTask);
-  } catch (error) {
-    console.error("Error updating task status:", error);
-    res.status(500).json({ error: "Failed to update task status" });
-  }
-});
+// Route to update a task's status
+router.put('/tasks/:id/status', taskController.updateTaskStatus);  // Define the PUT /tasks/:id/status route
 
 module.exports = router;
