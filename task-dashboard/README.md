@@ -703,3 +703,67 @@ Testing and review of backend:
 When reviewing the backend files, it's strategic to start from the core and move outward. In your case, a logical sequence would be to start with the foundational layer (the database interactions) and proceed to the layers that depend on it. 
 
 Inital testing of the Database is successful now Implementing automated testing with Jest and setting up Continuous Integration (CI) are excellent next steps to ensure your application remains robust, maintainable, and bug-free as it evolves.
+
+
+
+
+
+
+
+
+
+
+Final stack : 
+Node.js/Express 
+PostgreSQL
+React & TypeScript
+Docker & Kubernetes
+GraphQL
+Nginx
+GitLab CI/CD
+Prometheus & Grafana
+ELK Stack
+AWS
+
+
+/backend
+│
+├── /src
+│   ├── /config
+│   │   └── database.js        # Database connection setup and configuration
+│   │
+│   ├── /controllers
+│   │   └── taskController.js   # Controller for handling task-related logic
+│   │
+│   ├── /models
+│   │   └── taskModel.js        # Task model for interacting with the PostgreSQL database
+│   │
+│   ├── /routes
+│   │   └── taskRoutes.js       # Routes related to tasks (CRUD operations)
+│   │
+│   ├── /services
+│   │   └── taskService.js      # Business logic for tasks (optional, if logic is complex)
+│   │
+│   ├── /utils
+│   │   └── logger.js           # Utility for logging (e.g., Winston or a custom logger)
+│   │   └── errorHandler.js     # Custom error handling middleware
+│   │
+│   ├── /sockets
+│   │   └── taskSocket.js       # Socket.io setup and event handling for real-time updates
+│   │
+│   ├── app.js                  # Main Express app setup and middleware configuration
+│   └── server.js               # Entry point to start the server
+│
+├── /migrations                 # Database migration files (if using tools like Sequelize)
+│
+├── /tests                      # Test files for unit and integration tests
+│   ├── /controllers            # Tests for controllers
+│   ├── /models                 # Tests for models
+│   └── /routes                 # Tests for routes
+│
+├── .env                        # Environment variables (not to be committed)
+├── .gitignore                  # Git ignore file
+├── Dockerfile                  # Dockerfile for containerizing the backend
+├── docker-compose.yml          # Docker Compose file for setting up services
+├── package.json                # NPM dependencies and scripts
+└── README.md                   # Project documentation
