@@ -1,53 +1,43 @@
-// Handles HTTP requests related to tasks (e.g., creating, updating, retrieving tasks).
+const taskModel = require('../models/taskModel');
 
-const tasksService = require('../services/tasksService');
+// Controller function to create a new task
+const createTask = async (req, res) => {
+    try {
+        const { name } = req.body;
+        const task = await taskModel.createTask(name);
+        res.status(201).json(task);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to create task' });
+    }
+};
 
-// Controller to handle task-related HTTP requests
-
-// Fetch all tasks from the database
+// Controller function to get all tasks
 const getAllTasks = async (req, res) => {
     try {
-        const tasks = await tasksService.getAllTasks(); // Fetch tasks from service layer
-        res.json(tasks); // Send tasks as JSON response
+        const tasks = await taskModel.getAllTasks();
+        res.status(200).json(tasks);
     } catch (error) {
-        console.error("Error fetching tasks:", error);
-        res.status(500).json({ error: "Failed to fetch tasks" }); // Handle errors and send a 500 status code
+        res.status(500).json({ error: 'Failed to retrieve tasks' });
     }
 };
 
-// Add a new task to the database
-const addTask = async (req, res) => {
-    try {
-        const newTask = req.body; // Get task details from request body
-        const task = await tasksService.addTask(newTask); // Add the new task using the service layer
-        res.status(201).json(task); // Respond with the newly created task and a 201 status code
-    } catch (error) {
-        console.error("Error adding task:", error);
-        res.status(500).json({ error: "Failed to add task" }); // Handle errors and send a 500 status code
-    }
-};
-
-// Update an existing task's status
+// Controller function to update a task's status
 const updateTaskStatus = async (req, res) => {
     try {
-        const { id } = req.params; // Extract task ID from request parameters
-        const { status } = req.body; // Get new status from request body
-
-        const updatedTask = await tasksService.updateTaskStatus(id, status); // Update task status using the service layer
-
-        if (updatedTask) {
-            res.json(updatedTask); // Send the updated task as a JSON response
-        } else {
-            res.status(404).json({ error: "Task not found" }); // Handle case where task is not found
-        }
+        const { id } = req.params;
+        const { status } = req.body;
+        const updatedTask = await taskModel.updateTaskStatus(id, status);
+        res.status(200).json(updatedTask);
     } catch (error) {
-        console.error("Error updating task status:", error);
-        res.status(500).json({ error: "Failed to update task status" }); // Handle errors and send a 500 status code
+        res.status(500).json({ error: 'Failed to update task status' });
     }
 };
 
 module.exports = {
+    createTask,
     getAllTasks,
-    addTask,
     updateTaskStatus,
 };
+
+// This code defines the controller functions that handle the business logic for creating, 
+// retrieving, and updating tasks. It uses the taskModel to interact with the database.

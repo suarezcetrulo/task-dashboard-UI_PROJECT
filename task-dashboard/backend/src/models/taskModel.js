@@ -1,4 +1,4 @@
-const pool = require('../config/database');  // Import the database pool
+const pool = require('../config/database.js');  // Import the database pool
 
 // Function to create a new task
 const createTask = async (name) => {    // Define the createTask function

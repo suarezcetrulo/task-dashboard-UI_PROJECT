@@ -1,7 +1,7 @@
 const app = require('./app'); // Import the Express app
 const http = require('http'); // Import the HTTP module
 const socketIo = require('socket.io'); // Import the Socket.io module
-const pool = require('./config/database'); // Import the database pool
+const pool = require('./config/database.js'); // Import the database pool
 
 // Create HTTP server and attach Socket.io
 const server = http.createServer(app); // Create an HTTP server using the Express app

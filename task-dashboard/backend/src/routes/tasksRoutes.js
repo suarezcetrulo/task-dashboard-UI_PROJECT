@@ -1,6 +1,6 @@
 const express = require('express');   // Import the express module
 const router = express.Router();    // Create a new router using express
-const taskController = require('../controllers/taskController');  // Import the task controller
+const taskController = require('../controllers/tasksController.js');  // Import the task controller
 
 // Route to create a new task
 router.post('/tasks', taskController.createTask);   // Define the POST /tasks route

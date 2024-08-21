@@ -3,6 +3,9 @@ const app = express();  // Create an Express application
 
 app.use(express.json());  // Middleware to parse JSON bodies
 
+const tasksRoutes = require("./routes/tasksRoutes");  // Import tasks routes
+app.use("/api", tasksRoutes);  // Use tasks routes for /tasks URL
+
 app.get('/', (req, res) => {
   res.send('Task Dashboard API is running!');  // Send a response to the client
 });
