@@ -2,13 +2,21 @@ const { Pool } = require('pg'); // Import the Pool class from the pg
 
 // Create a new pool for connecting to PostgreSQL
 const pool = new Pool({ // Create a new Pool instance
-    user: 'your_db_user', // replace with your PostgreSQL username
+    user: 'myuser', // replace with your PostgreSQL username
     host: 'localhost', // default PostgreSQL host
-    database: 'your_db_name', // replace with your database name
-    password: 'your_db_password', // replace with your PostgreSQL password
+    database: 'taskdb', // replace with your database name
+    password: 'mypassword', // replace with your PostgreSQL password
     port: 5432, // default PostgreSQL port
 });
 
+// Test the database connection
+pool.query('SELECT NOW()', (err, res) => {
+    if (err) {
+        console.error('Database connection test failed:', err.stack);
+    } else {
+        console.log('Database connection test succeeded:', res.rows);
+    }
+}); //It attempts to execute a simple SELECT NOW() query to ensure that the database connection is established correctly. If there’s an issue with the connection, it will be logged in the console.
 // Export the pool for use in other parts of the app
 module.exports = pool; 
 
