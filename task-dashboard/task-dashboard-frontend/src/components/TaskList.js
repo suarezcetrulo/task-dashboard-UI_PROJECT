@@ -8,7 +8,7 @@ const TaskList = () => {
   const { tasks, loading, error } = useTasks();
   const [socketTasks, setSocketTasks] = useState(tasks); // Local state to manage tasks updated via socket
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Set up Socket.io for real-time updates
     const socket = io('http://localhost:3000');
 
@@ -19,7 +19,7 @@ const TaskList = () => {
 
     // Handle task creation in real-time
     socket.on('taskCreated', (newTask) => {
-      setSocketTasks((prevTasks) => [...prevTasks, newTask]);
+      setSocketTasks((prevTasks) => [...prevTasks, newTask]); // Add new task to the list
     });
 
     // Handle task update in real-time
@@ -31,7 +31,7 @@ const TaskList = () => {
 
     // Clean up on component unmount
     return () => {
-      socket.off('connect_error');
+      // socket.off('connect_error');
       socket.off('taskCreated');
       socket.off('taskUpdated');
       socket.disconnect();

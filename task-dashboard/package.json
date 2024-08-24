@@ -1,0 +1,12 @@
+{
+  "name": "task-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "scripts": {
+    "start:backend": "nodemon ./backend/src/server.js", 
+    "start:frontend": "npm start --prefix ./task-dashboard-frontend",
+    "start:all": "concurrently \"npm run start:backend\" \"npm run start:frontend\"" 
+}
