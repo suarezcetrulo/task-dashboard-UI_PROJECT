@@ -24,11 +24,17 @@ const getAllTasks = async () => {
 
 // Function to update task status
 const updateTaskStatus = async (id, status) => {    
+    try {
     const result = await pool.query(    
-        'UPDATE tasks SET status = $1, ended_at = CASE WHEN $1 IN (\'Finished\', \'Terminated\') THEN NOW() ELSE NULL END WHERE id = $2 RETURNING *',   
+        'UPDATE tasks SET status = $1::TEXT, ended_at = CASE WHEN $1::TEXT IN (\'Finished\', \'Terminated\') THEN NOW() ELSE NULL END WHERE id = $2::INTEGER RETURNING *',   
         [status, id]   
     );
     return result.rows[0];  
+} catch (error) {   
+    console.error('Error updating task status:', error.message); 
+    console.error('Stack trace:', error.stack); 
+    throw error;  
+}
 };
 
 // Export the model functions
@@ -37,3 +43,4 @@ module.exports = {
     getAllTasks,    
     updateTaskStatus,   
 };
+''
