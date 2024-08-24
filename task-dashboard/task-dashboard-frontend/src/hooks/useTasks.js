@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const useTasks = () => {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [tasks, setTasks] = useState([]); //state to store tasks
+  const [loading, setLoading] = useState(true); //state to indicate loading state
+  const [error, setError] = useState(null); // State to store error message
 
   useEffect(() => {
     const fetchTasks = async () => {
