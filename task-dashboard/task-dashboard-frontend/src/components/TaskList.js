@@ -1,9 +1,10 @@
 // src/components/TaskList.js
 import React, { useEffect, useState } from 'react';
 import useTasks from '../hooks/useTasks';
-import TaskItem from './TaskItem';
+import Sidebar from './Sidebar'; // Import Sidebar component
+// import TaskItem from './TaskItem';
 import io from 'socket.io-client';
-
+import '../styles/TaskList.css'; // Import TaskList styles
 const TaskList = () => {
   const { tasks, loading, error } = useTasks();
   const [socketTasks, setSocketTasks] = useState(tasks); // Local state to manage tasks updated via socket
@@ -31,7 +32,7 @@ const TaskList = () => {
 
     // Clean up on component unmount
     return () => {
-      // socket.off('connect_error');
+      socket.off('connect_error');
       socket.off('taskCreated');
       socket.off('taskUpdated');
       socket.disconnect();
@@ -46,19 +47,45 @@ const TaskList = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="task-list">
-      <h2>Task List</h2>
-      {socketTasks.length ? (
-        <ul>
-          {socketTasks.map((task) => (
-            <TaskItem key={task.id} task={task} />
-          ))}
-        </ul>
-      ) : (
-        <p>No tasks available</p>
-      )}
+<div className="main-container">
+      <Sidebar /> {/* Include Sidebar component */}
+      <div className="task-list-container">
+        <h2>Task List</h2>
+        {socketTasks.length ? (
+          <table className="task-table">
+            <thead>
+              <tr>
+                <th>Task Name</th>
+                <th>Created At</th>
+                <th>Ended At</th>
+                <th>Execution Time</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {socketTasks.map((task) => (
+                <tr key={task.id}>
+                  <td>{task.name}</td>
+                  <td>{new Date(task.createdAt).toLocaleString()}</td>
+                  <td>{task.endedAt ? new Date(task.endedAt).toLocaleString() : 'N/A'}</td>
+                  <td>
+                    {task.endedAt
+                      ? `${Math.round(
+                          (new Date(task.endedAt) - new Date(task.createdAt)) / 1000
+                        )} seconds`
+                      : 'N/A'}
+                  </td>
+                  <td>{task.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No tasks available</p>
+        )}
+      </div>
     </div>
   );
 };
 
-export default TaskList;
+export default TaskList
