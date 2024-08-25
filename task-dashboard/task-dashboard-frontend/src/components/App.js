@@ -1,25 +1,16 @@
-import logo from '../logo.svg';
-import '../App.css';
+// src/components/App.js
 
-function App() {
+import React from 'react';
+import TaskList from './TaskList'; // Ensure the import path is correct if TaskList is in the same folder
+import '../App.css'; // Retain CSS if needed for global styling
+
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Task Dashboard</h1>
+      <TaskList /> {/* Render the TaskList component */}
     </div>
   );
-}
+};
 
 export default App;
