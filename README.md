@@ -75,3 +75,5 @@ cd <repository-directory>
 
 npm install concurrently --save-dev
 npm run start:all
+
+### ** Additional Notes: 
