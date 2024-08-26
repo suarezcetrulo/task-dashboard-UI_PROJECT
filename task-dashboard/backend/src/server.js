@@ -1,25 +1,51 @@
-const app = require('./app'); // Import the Express app
-const http = require('http'); // Import the HTTP module
-const socketIo = require('socket.io'); // Import the Socket.io module
-const pool = require('./config/database.js'); // Import the database pool
+const app = require('./app');
+const http = require('http');
+const socketIo = require('socket.io');
+const pool = require('./config/database.js');
 
-// Create HTTP server and attach Socket.io
-const server = http.createServer(app); // Create an HTTP server using the Express app
-const io = socketIo(server);      // Attach Socket.io to the HTTP server
+const server = http.createServer(app);
+const io = socketIo(server);
 
-// Basic event listener for Socket.io
-io.on('connection', (socket) => { // Listen for new socket connections
-    console.log('A user connected');   // Log a message when a new user connects
-    
-    // Handle socket disconnection
-    socket.on('disconnect', () => { // Listen for socket disconnections
-        console.log('A user disconnected'); // Log a message when a user disconnects
+io.on('connection', (socket) => {
+    console.log('A user connected');
+
+    // Optionally send initial tasks to the client upon connection
+    socket.emit('initialTasks', getTasksFromDatabase());
+
+    socket.on('disconnect', () => {
+        console.log('A user disconnected');
     });
 });
 
-// Start the server on port 3000
-const PORT = process.env.PORT || 3000; // Define the port to run the server on
-server.listen(PORT, () => { // Start the server and listen on the specified port
-    console.log(`Server is running on port ${PORT}`); // Log a message when the server starts
+// Function to get tasks from the database
+async function getTasksFromDatabase() {
+    try {
+        const res = await pool.query('SELECT * FROM tasks'); // Example query
+        return res.rows;
+    } catch (err) {
+        console.error('Error fetching tasks:', err);
+        return [];
+    }
+}
+
+// Function to update tasks periodically
+async function updateTasksPeriodically() {
+    setInterval(async () => {
+        try {
+            // Example logic to update task statuses
+            await pool.query('UPDATE tasks SET status = ... WHERE ...');
+            const updatedTasks = await getTasksFromDatabase();
+            io.emit('taskUpdate', updatedTasks); // Broadcast updated tasks to all clients
+        } catch (err) {
+            console.error('Error updating tasks:', err);
+        }
+    }, 60000); // Update every minute
+}
+
+// Start periodic task updates
+updateTasksPeriodically();
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
-// This code starts the server on port 3000 and sets up a basic Socket.io connection to handle real-time updates.
