@@ -76,4 +76,4 @@ cd <repository-directory>
 npm install concurrently --save-dev
 npm run start:all
 
-### ** Additional Notes: 
+### ** Additional Notes: https://github.com/Aldridge-Abaasa/task-dashboard-UI_PROJECT/blob/main/task-dashboard/README.md#task-management-api---backend
