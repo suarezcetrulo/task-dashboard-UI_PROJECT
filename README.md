@@ -57,6 +57,8 @@ The goal is to develop a web application with the following features:
 3. **State Management Synchronization**
    - **Problem**: Difficulty synchronizing state between real-time updates and the initial fetch.
    - **Solution**: Utilized local state management strategies and carefully synchronized updates with hooks.
+   - 
+### ** Additional Notes: https://github.com/Aldridge-Abaasa/task-dashboard-UI_PROJECT/blob/main/task-dashboard/README.md#task-management-api---backend
 
 ## 🚀 How to Deploy and Run the Project Locally
 
@@ -76,4 +78,4 @@ cd <repository-directory>
 npm install concurrently --save-dev
 npm run start:all
 
-### ** Additional Notes: https://github.com/Aldridge-Abaasa/task-dashboard-UI_PROJECT/blob/main/task-dashboard/README.md#task-management-api---backend
+
