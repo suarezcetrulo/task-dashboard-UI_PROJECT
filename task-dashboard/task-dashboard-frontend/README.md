@@ -1,70 +1,36 @@
-# Getting Started with Create React App
+FRONT END setup: 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+The TaskList component:
 
-In the project directory, you can run:
+Fetches and displays a list of tasks.
+Uses Socket.io to receive real-time updates about task creation and updates from a server.
+Manages task data with local state (socketTasks), synchronizing it with both fetched data and real-time updates.
+Displays a task overview with some statistics and a detailed task list in a table format.
+Handles loading and error states 
 
-### `npm start`
+The App component serves as the main container for the task management dashboard:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+It uses a custom hook (useTasks) to fetch and manage the state of tasks.
+It provides a high-level overview of tasks using the TaskOverview component.
+It displays a detailed, real-time list of tasks using the TaskList component.
+The structure is styled using global CSS rules from App.css.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The Sidebar component provides a simple, styled sidebar for a task management application:
 
-### `npm test`
+Functionality: It serves as a navigational tool within the application, providing links to different sections (e.g., a list of tasks).
+Customization: The sidebar can be easily expanded with more links or additional content to suit the application's needs.
+Styling: It is styled using a dedicated CSS file (Sidebar.css), ensuring a consistent look and feel within the application.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The TaskOverview component provides a summarized view of task statistics within the task management application:
 
-### `npm run build`
+Functionality: It displays key metrics about the tasks, including the total number of tasks, how many have been completed, and how many are in progress.
+Presentation: The component is styled using a dedicated CSS file (TaskOverview.css), ensuring the statistics are visually clear and appealing.
+Reusability: It can be easily reused or placed in different parts of the application wherever a quick summary of tasks is needed.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The useTasks custom hook provides a reusable way to fetch task data with robust error handling and a retry mechanism:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Data Management: Manages tasks, loading, and error states within a React component.
+Retry Mechanism: Retries failed requests up to a specified number of times (retryCount) with a specified delay (retryDelay).
+Error Handling: Provides detailed error messages based on the nature of the failure (server response, no response, request setup error).
+Reusability: Can be reused across multiple components in the application, centralizing the data-fetching logic for tasks.

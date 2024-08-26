@@ -30,4 +30,18 @@
   .task-table tr:hover {
     background-color: #f1f1f1;
   }
-  
+  .status-not-started {
+    color: gray;
+  }
+  .status-on-progress {
+    color: blue;
+  }
+  .status-on-hold {
+    color: yellow;
+  }
+  .status-finished {
+    color: green;
+  }
+  .status-terminated {
+    color: red;
+  }
